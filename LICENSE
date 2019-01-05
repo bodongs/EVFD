@@ -1,0 +1,61 @@
+<?php
+$yellow = "\e[93m";
+$blue   = "\e[34m";
+$lblue  = "\e[36m";
+$cln    = "\e[0m";
+$green  = "\e[92m";
+$red    = "\e[91m";
+$bluebg = "\e[44m";
+$lbluebg = "\e[106m";
+$greenbg = "\e[42m";
+$lgreenbg = "\e[102m";
+$yellowbg = "\e[43m";
+$lyellowbg = "\e[103m";
+$redbg = "\e[101m";
+$bold   = "\e[1m";
+
+function curl($url) {
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_5; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Chrome/9.0.597.15 Safari/534.13");
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    $content = curl_exec($curl);
+    curl_close($curl);
+    return $content;
+}
+system("clear");
+echo "$red                       :::::::::: :::::::::: :::     ::: :::::::::\n";
+echo "                      :+:        :+:        :+:     :+: :+:    :+:\n";
+echo "                      +:+        +:+        +:+     +:+ +:+    +:+\n";
+echo "                     +#++:++#   :#::+::#   +#+     +:+ +#+    +:+\n";
+echo "                    +#+        +#+         +#+   +#+  +#+    +#+\n";
+echo "                   #+#        #+#          #+#+#+#   #+#    #+#\n";
+echo "                  ########## ###            ###     #########\n";
+echo 
+"==========================================================================================\n";
+echo "                          Easy Facebook Video Downloader\n";
+echo 
+"==========================================================================================\n";
+echo "\n";
+echo "\n";
+echo "[#]Enter Your Video Link  : ";
+$v = trim(fgets(STDIN, 1024));
+echo "\n\n[#] Nama Video Yg Ingin Disimpan : ";
+$name = trim(fgets(STDIN, 1024));
+$url = str_replace('www', 'mbasic', $v);
+$s = curl($url);
+//echo $s;
+system("clear");
+$vurl = preg_match('/<a href=\"\/video_redirect\/\?src\=(.*?)\"/ims', $s, $matches) ? $matches[1] : null;
+$vu = urldecode($vurl);
+echo "\n\n[+] Downloading... \n\n\n";
+$d = 'wget -O "' . $name . '.mp4" --user-agent="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6" "' . $vu . '" -q --show-progress';
+system($d);
+system("clear");
+echo "$green=====================Succes=====================\n";
+echo "$red Nama Video : " .  $name . ".mp4\n\n";
+echo " Directory  : EFVD/ " . $name . ".mp4\n\n";
+echo " Format     : MP4\n";
+echo "$green=====================Succes=====================";
+exit(0);
+?>
